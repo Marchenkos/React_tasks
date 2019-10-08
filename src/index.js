@@ -9,10 +9,11 @@ class App extends React.Component {
         this.state = {
             cities: [],
             adjectives: [],
-            history:[{
-                pair:Array(2).fill(""),
-            }]
+            history:[],
+            pair: Array(2).fill(""),
         };
+
+        this.handleClick = this.handleClick.bind(this);
     }
 
     componentDidMount() {
@@ -27,50 +28,62 @@ class App extends React.Component {
 
     handleClick() {
         const history = this.state.history.slice();
-        const current = history[history.length - 1];
-        let pair = current.pair.slice();
+        const cities = this.state.cities.slice();
+        const adjectives = this.state.adjectives.slice();
+        let pair = this.state.pair.slice();
 
-        if (this.state.history.length < this.state.cities.length * this.state.adjectives.length) {
-            const index = this.state.history.length;
-            const city = this.state.cities[Math.floor(Math.random()*this.state.cities.length)];
-            const adjective = this.state.adjectives[Math.floor(Math.random()*this.state.adjectives.length)];
+        if (history.length < cities.length * adjectives.length) {
 
-            if(!history.includes([adjective, city])) {
-                console.log(history);
-                console.log([adjective, city]);
+            const randomCities = randomSort(cities);
+            const randomAdjectives = randomSort(adjectives);
+            pair = [randomAdjectives[0], randomCities[0]];
 
-                pair = [adjective, city];
-            } else {
+            if(history.includes(pair)) {
                 this.handleClick();
+            } else {
+                history.push(pair);
+                this.setState({
+                    pair: pair, 
+                    history: history,
+                })
             }
         } else {
             return;
         }
-
-        this.setState({
-            history: history.concat([
-                {
-                    pair: pair
-                }
-            ]),
-        })
     }
 
     render() {
         const history = this.state.history;
-        const current = history[history.length - 1];
-        const pair = current.pair;
-
-        const status = "All: " + (this.state.cities.length * this.state.adjectives.length) + " / now: " + (this.state.history.length - 1);
+        const pair = this.state.pair;
+        const historyFormst = newFormat(history);
+        const status = "All: " + (this.state.cities.length * this.state.adjectives.length) + " / now: " + this.state.history.length;
 
         return (
             <React.Fragment>
                 <input type="text" value={pair[0] + " " + pair[1]}></input>
-                <button onClick={() => this.handleClick()}>click me</button>
+                <button onClick={this.handleClick}>click me</button>
+                <textarea value={historyFormst}></textarea>
                 <div>{status}</div>
             </React.Fragment>
         );
     }
+}
+
+function newFormat(array) {
+    let format = array.map(el => "\n" + el[0] + " " + el[1]);
+
+    return format;
+}
+
+function randomSort(array) {
+    let index;
+
+    for( let i = array.length -1; i > 0; i--) {
+        index = Math.floor(Math.random()*(i + 1));
+        [array[i], array[index]] = [array[index], array[i]]
+    }
+
+    return array;
 }
 
 ReactDom.render(<App/>, document.getElementById("root"));
