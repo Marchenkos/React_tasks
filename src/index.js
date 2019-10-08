@@ -10,7 +10,7 @@ class App extends React.Component {
             cities: [],
             adjectives: [],
             history:[],
-            pair: Array(2).fill(""),
+            pair:"",
         };
 
         this.handleClick = this.handleClick.bind(this);
@@ -30,13 +30,12 @@ class App extends React.Component {
         const history = this.state.history.slice();
         const cities = this.state.cities.slice();
         const adjectives = this.state.adjectives.slice();
-        let pair = this.state.pair.slice();
+        let pair;
 
         if (history.length < cities.length * adjectives.length) {
-
             const randomCities = randomSort(cities);
             const randomAdjectives = randomSort(adjectives);
-            pair = [randomAdjectives[0], randomCities[0]];
+            pair = `${randomAdjectives[0]} ${randomCities[0]}`;
 
             if(history.includes(pair)) {
                 this.handleClick();
@@ -53,16 +52,17 @@ class App extends React.Component {
     }
 
     render() {
-        const history = this.state.history;
-        const pair = this.state.pair;
-        const historyFormst = newFormat(history);
-        const status = "All: " + (this.state.cities.length * this.state.adjectives.length) + " / now: " + this.state.history.length;
+        const state = this.state;
+        const history = state.history;
+        const pair = state.pair;
+        const historyFormat = newFormat(history);
+        const status = "All: " + (state.cities.length * state.adjectives.length) + " / now: " + history.length;
 
         return (
             <React.Fragment>
-                <input type="text" value={pair[0] + " " + pair[1]}></input>
+                <input type="text" value={pair}></input>
                 <button onClick={this.handleClick}>click me</button>
-                <textarea value={historyFormst}></textarea>
+                <textarea value={historyFormat}></textarea>
                 <div>{status}</div>
             </React.Fragment>
         );
@@ -70,7 +70,7 @@ class App extends React.Component {
 }
 
 function newFormat(array) {
-    let format = array.map(el => "\n" + el[0] + " " + el[1]);
+    let format = array.map(el => "\n" + el);
 
     return format;
 }
