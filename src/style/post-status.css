@@ -1,0 +1,4 @@
+.post-status {
+    display: flex;
+    justify-content: flex-start;
+}

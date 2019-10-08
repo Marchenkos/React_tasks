@@ -1,0 +1,11 @@
+.reposts-field {
+    display: flex;
+    align-items: flex-end;
+    margin-left: 10px;
+}
+.reposts-field__repost {
+    background: none;
+    border: none;
+    cursor: pointer;
+
+}

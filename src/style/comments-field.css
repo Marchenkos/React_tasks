@@ -1,0 +1,11 @@
+.comments-field {
+    display: flex;
+    align-items: flex-end;
+    margin-left: 10px;
+}
+.comments-field__comment{
+    background: none;
+    border: none;
+    cursor: pointer;
+
+}

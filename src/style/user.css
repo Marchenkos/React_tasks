@@ -1,0 +1,13 @@
+.user {
+    margin-bottom: 20px;
+}
+.user .user__avatar {
+    width: 50px;
+    float: left;
+    border-radius: 50px;
+    margin-right: 7px;
+}
+
+.user .user__name {
+    font-size: 22px;
+}
