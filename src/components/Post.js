@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import UserInformation from "./UserInformation";
-import Content from "./Content"
-import PostStatus from "./PostStatus"
-import '../style/post.css'
+import Content from "./Content";
+import PostStatus from "./PostStatus";
+import "../style/post.css";
 
 class Post extends React.Component {
     formatDate(date) {
