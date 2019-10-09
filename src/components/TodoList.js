@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import FieldForAdd from "./FieldForAdd";
 import List from "./List";
+import '../style/todo-list.css'
 
 class TodoList extends React.Component {
     constructor(props) {
         super(props);
+        this.inputElement;
         this.state = {
             list:[]
         }
@@ -13,28 +15,28 @@ class TodoList extends React.Component {
     }
 
     addNewTask() {
-        const element = document.querySelector(".current-task__name");
         const list = this.state.list.slice();
-        list.push(element.value);
+        list.push(this.inputElement.value);
         this.setState({
             list: list
         });
-        element.value = "";
-
-        console.log(this.state.list);
+        this.inputElement.value = "";
     }
 
-    removeTask(id) {
-        const element = document.getElementById(id);
-        element.remove();
+    removeTask(value) {
+        let list = this.state.list.slice();
+        list = list.filter(item => item != value);
+        this.setState({
+            list: list
+        });
     }
 
     render(){
         return (
             <div className="todo-list">
                 <div className="todo-list__title">Todoshka</div>
-                <FieldForAdd onClick={this.addNewTask}/>
-                <List allTasks={this.state.list} onComplete={this.removeTask}/>
+                <FieldForAdd onClick={this.addNewTask} inputRef={el => this.inputElement = el}/>
+                <List allTasks={this.state.list} onComplete={this.removeTask.bind(this)}/>
             </div>
         );
     }
