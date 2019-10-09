@@ -1,15 +1,16 @@
 import React from "react";
 import ReactDom from "react-dom";
+import "./style/index.css"
 
 class App extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            cities: [],
-            adjectives: [],
             history:[],
-            pair:"",
+            pairsSize:0,
+            pairs:[],
+            currenrPair:""
         };
 
         this.handleClick = this.handleClick.bind(this);
@@ -17,34 +18,41 @@ class App extends React.Component {
 
     componentDidMount() {
         const API = "https://gp-js-test.herokuapp.com/api";
+        
         fetch(API)
             .then(response => response.json())
-            .then(data => this.setState({
-                cities: data.cities,
-                adjectives: data.adjectives,
-            }));
+            .then(data => {
+                let pairs = [];
+
+                for(let adjective of data.adjectives) {
+                    for(let city of data.cities) {
+                        pairs.push(`${adjective} ${city}`);
+                    }
+                }
+
+                const randomPairs = randomSort(pairs);
+
+                return this.setState({
+                    pairs: randomPairs,
+                    pairsSize: randomPairs.length
+                })
+            });
+        
     }
 
     handleClick() {
+        const pairs = this.state.pairs.slice();
         const history = this.state.history.slice();
-        const cities = this.state.cities.slice();
-        const adjectives = this.state.adjectives.slice();
-        let pair;
 
-        if (history.length < cities.length * adjectives.length) {
-            const randomCities = randomSort(cities);
-            const randomAdjectives = randomSort(adjectives);
-            pair = `${randomAdjectives[0]} ${randomCities[0]}`;
+        if(pairs.length != 0) {
+            const currenrPair = pairs.pop();
+            history.push(currenrPair);
 
-            if(history.includes(pair)) {
-                this.handleClick();
-            } else {
-                history.push(pair);
-                this.setState({
-                    pair: pair, 
-                    history: history,
-                })
-            }
+            this.setState({
+                currenrPair: currenrPair,
+                history: history,
+                pairs:pairs
+            });
         } else {
             return;
         }
@@ -53,15 +61,15 @@ class App extends React.Component {
     render() {
         const state = this.state;
         const history = state.history;
-        const pair = state.pair;
+        const currentPair = state.currenrPair;
         const historyFormat = newFormat(history);
-        const status = "All: " + (state.cities.length * state.adjectives.length) + " / now: " + history.length;
+        const status = "All: " + state.pairsSize + " / now: " + history.length;
 
         return (
             <React.Fragment>
-                <input type="text" value={pair}></input>
+                <input type="text" value={currentPair}></input>
                 <button onClick={this.handleClick}>click me</button>
-                <textarea value={historyFormat}></textarea>
+                <textarea className="history" value={historyFormat}></textarea>
                 <div>{status}</div>
             </React.Fragment>
         );
