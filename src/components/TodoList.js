@@ -11,10 +11,12 @@ class TodoList extends React.Component {
         }
     }
 
-    addNewTask = (value) => {
+    addNewTask = (e, value) => {
+        e.preventDefault();
         const list = this.state.list;
         list.push(value);
         this.setState({list});
+        console.log(this.state.list);
     }
 
     removeTask = (value) => {
