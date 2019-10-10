@@ -12,8 +12,6 @@ class App extends React.Component {
             pairs: [],
             currenrPair: ""
         };
-
-        this.handleClick = this.handleClick.bind(this);
     }
 
     randomSort(array) {
@@ -51,7 +49,7 @@ class App extends React.Component {
         
     }
 
-    handleClick() {
+    handleClick = () => {
         const pairs = this.state.pairs;
         const history = this.state.history;
 
