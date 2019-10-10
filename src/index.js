@@ -7,13 +7,24 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            history:[],
-            pairsSize:0,
-            pairs:[],
-            currenrPair:""
+            history: [],
+            pairsSize: 0,
+            pairs: [],
+            currenrPair: ""
         };
 
         this.handleClick = this.handleClick.bind(this);
+    }
+
+    randomSort(array) {
+        let index;
+    
+        for( let i = array.length -1; i > 0; i--) {
+            index = Math.floor(Math.random()*(i + 1));
+            [array[i], array[index]] = [array[index], array[i]]
+        }
+    
+        return array;
     }
 
     componentDidMount() {
@@ -30,7 +41,7 @@ class App extends React.Component {
                     }
                 }
 
-                const randomPairs = randomSort(pairs);
+                const randomPairs = this.randomSort(pairs);
 
                 return this.setState({
                     pairs: randomPairs,
@@ -53,8 +64,6 @@ class App extends React.Component {
                 history: history,
                 pairs:pairs
             });
-        } else {
-            return;
         }
     }
 
@@ -77,20 +86,9 @@ class App extends React.Component {
 }
 
 function newFormat(array) {
-    let format = array.map(el => "\n" + el);
+    let format = array.join("\n");
 
     return format;
-}
-
-function randomSort(array) {
-    let index;
-
-    for( let i = array.length -1; i > 0; i--) {
-        index = Math.floor(Math.random()*(i + 1));
-        [array[i], array[index]] = [array[index], array[i]]
-    }
-
-    return array;
 }
 
 ReactDom.render(<App/>, document.getElementById("root"));
