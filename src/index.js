@@ -52,8 +52,8 @@ class App extends React.Component {
     }
 
     handleClick() {
-        const pairs = this.state.pairs.slice();
-        const history = this.state.history.slice();
+        const pairs = this.state.pairs;
+        const history = this.state.history;
 
         if(pairs.length != 0) {
             const currenrPair = pairs.pop();
