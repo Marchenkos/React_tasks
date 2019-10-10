@@ -16,7 +16,6 @@ class TodoList extends React.Component {
         const list = this.state.list;
         list.push(value);
         this.setState({list});
-        console.log(this.state.list);
     }
 
     removeTask = (value) => {
