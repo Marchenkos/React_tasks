@@ -1,11 +1,10 @@
-.comments-field {
+.assessment-field {
     display: flex;
     align-items: flex-end;
     margin-left: 10px;
 }
-.comments-field__comment{
+.assessment-field__change-button{
     background: none;
     border: none;
     cursor: pointer;
-
 }

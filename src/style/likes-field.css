@@ -1,9 +1,0 @@
-.likes-field {
-    display: flex;
-    align-items: flex-end;
-}
-.likes-field__like {
-    background: none;
-    border: none;
-    cursor: pointer;
-}

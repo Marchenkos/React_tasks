@@ -13,6 +13,7 @@ const post = {
         imgUrl: "./src/img/korgy.jpg",
     }
 }
+
 ReactDOM.render(<Post 
     user={post.user}
     postContent={post.postContent}

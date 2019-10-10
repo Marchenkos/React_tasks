@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import '../style/user.css'
+import React from "react";
+import "../style/user.css";
 
 function UserInformation(props) {
     return (
@@ -10,4 +10,5 @@ function UserInformation(props) {
         </div>
     );
 }
+
 export default UserInformation;
