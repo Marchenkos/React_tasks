@@ -1,11 +1,18 @@
-import React, { Component } from "react";
+import React from "react";
 
 function FieldForAdd(props) {
+    let inputElement;
+
     return(
-        <div className="current-task">
-            <input className="current-task__name" ref={props.inputRef} />
-            <button className="current-task__add" onClick={props.onClick}>Add</button>
-        </div>
+        <form className="current-task" onSubmit={(e) => {
+            e.preventDefault();
+            props.handleSubmit(inputElement.value);
+            inputElement.value = "";}
+        }>
+            <input className="current-task__name" ref={(input) => inputElement = input} />
+            <button className="current-task__add" type="submit">Add</button>
+        </form>
     );
 }
+
 export default FieldForAdd;

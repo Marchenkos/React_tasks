@@ -1,42 +1,40 @@
-import React, { Component } from "react";
+import React from "react";
 import FieldForAdd from "./FieldForAdd";
-import List from "./List";
+import Task from "./Task"
 import '../style/todo-list.css'
 
 class TodoList extends React.Component {
     constructor(props) {
         super(props);
-        this.inputElement;
         this.state = {
-            list:[]
+            list: [],
         }
-
-        this.addNewTask = this.addNewTask.bind(this);
     }
 
-    addNewTask() {
-        const list = this.state.list.slice();
-        list.push(this.inputElement.value);
-        this.setState({
-            list: list
-        });
-        this.inputElement.value = "";
+    addNewTask = (value) => {
+        const list = this.state.list;
+        list.push(value);
+        this.setState({list});
     }
 
-    removeTask(value) {
-        let list = this.state.list.slice();
+    removeTask = (value) => {
+        let list = this.state.list;
         list = list.filter(item => item != value);
-        this.setState({
-            list: list
-        });
+        this.setState({list});
     }
 
     render(){
+        const listItems = this.state.list.map((task, index) =>
+            <Task key={index} value={task} onComplete={this.removeTask}/>
+        );
+
         return (
             <div className="todo-list">
                 <div className="todo-list__title">Todoshka</div>
-                <FieldForAdd onClick={this.addNewTask} inputRef={el => this.inputElement = el}/>
-                <List allTasks={this.state.list} onComplete={this.removeTask.bind(this)}/>
+                <FieldForAdd handleSubmit={this.addNewTask} />
+                <ul>
+                    {listItems}
+                </ul>
             </div>
         );
     }
