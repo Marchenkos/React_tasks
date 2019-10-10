@@ -14,17 +14,6 @@ class App extends React.Component {
         };
     }
 
-    randomSort(array) {
-        let index;
-    
-        for( let i = array.length -1; i > 0; i--) {
-            index = Math.floor(Math.random()*(i + 1));
-            [array[i], array[index]] = [array[index], array[i]]
-        }
-    
-        return array;
-    }
-
     componentDidMount() {
         const API = "https://gp-js-test.herokuapp.com/api";
         
@@ -49,6 +38,17 @@ class App extends React.Component {
         
     }
 
+    randomSort(array) {
+        let index;
+    
+        for( let i = array.length -1; i > 0; i--) {
+            index = Math.floor(Math.random()*(i + 1));
+            [array[i], array[index]] = [array[index], array[i]]
+        }
+    
+        return array;
+    }
+
     handleClick = () => {
         const pairs = this.state.pairs;
         const history = this.state.history;
@@ -69,7 +69,7 @@ class App extends React.Component {
         const state = this.state;
         const history = state.history;
         const currentPair = state.currenrPair;
-        const historyFormat = newFormat(history);
+        const historyFormat = history.join("\n");;
         const status = "All: " + state.pairsSize + " / now: " + history.length;
 
         return (
@@ -81,12 +81,6 @@ class App extends React.Component {
             </React.Fragment>
         );
     }
-}
-
-function newFormat(array) {
-    let format = array.join("\n");
-
-    return format;
 }
 
 ReactDom.render(<App/>, document.getElementById("root"));
