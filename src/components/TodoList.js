@@ -4,28 +4,19 @@ import Task from "./Task"
 import '../style/todo-list.css'
 
 class TodoList extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            list: [],
-        }
-    }
-
     addNewTask = (e, value) => {
         e.preventDefault();
-        const list = this.state.list;
-        list.push(value);
-        this.setState({list});
+        this.props.addItemInList(value);
     }
 
     removeTask = (value) => {
-        let list = this.state.list;
+        let list = this.props.list;
         list = list.filter(item => item != value);
-        this.setState({list});
+        this.props.removeItemInList(list);
     }
 
     render(){
-        const listItems = this.state.list.map((task, index) =>
+        const listItems = this.props.list.map((task, index) =>
             <Task key={index} value={task} onComplete={this.removeTask}/>
         );
 
