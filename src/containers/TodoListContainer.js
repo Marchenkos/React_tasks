@@ -1,20 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { addItemInList } from "../actions/addItemInList";
-import { removeItemInList } from "../actions/removeItemInList";
+import { addItemInList, removeItemInList } from "../actions/changeList";
 import TodoList from "../components/TodoList";
-
-class TodoListContainer extends React.Component {
-    render() {
-        return (
-            <TodoList
-                list={this.props.list}
-                addItemInList={this.props.addItemInList}
-                removeItemInList={this.props.removeItemInList}
-            />
-        );
-    }
-}
 
 const mapStateToProps = state => {
     return {
@@ -29,4 +16,4 @@ const mapDispatchToProps = dispatch => {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodoListContainer);
+export const TodoListContainer = connect(mapStateToProps, mapDispatchToProps)(TodoList);

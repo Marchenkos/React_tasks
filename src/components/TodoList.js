@@ -10,14 +10,12 @@ class TodoList extends React.Component {
     }
 
     removeTask = (value) => {
-        let list = this.props.list;
-        list = list.filter(item => item != value);
-        this.props.removeItemInList(list);
+        this.props.removeItemInList(value);
     }
 
     render(){
         const listItems = this.props.list.map((task, index) =>
-            <Task key={index} value={task} onComplete={this.removeTask}/>
+            <Task key={index} id={index} value={task} onComplete={this.removeTask}/>
         );
 
         return (

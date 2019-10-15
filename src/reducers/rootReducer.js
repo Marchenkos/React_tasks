@@ -1,5 +1,4 @@
-import { REMOVE_TASK } from "../actions/removeItemInList";
-import { ADD_NEW_TASK } from "../actions/addItemInList";
+import { REMOVE_TASK, ADD_NEW_TASK } from "../actions/changeList";
 
 export const defaultState = {
     list: []
@@ -16,7 +15,7 @@ export const rootReducer = (state = defaultState, action) => {
         case REMOVE_TASK:
             return {
                 ...state,
-                list: action.payload
+                list: state.list.filter(item => item != action.payload)
             };
 
         default:
